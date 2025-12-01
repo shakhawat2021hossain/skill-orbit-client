@@ -3,6 +3,7 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import notFound from "./app/middleware/notFound.js"
 import globalErrorHandler from "./app/middleware/globalErrorHandler.js"
+import { router } from "./app/routes/index.js"
 const app = express()
 
 // middleware
@@ -22,6 +23,8 @@ app.get('/', async (req: Request, res: Response) => {
         message: "Hello from Server"
     })
 })
+
+app.use('/api', router)
 
 
 app.use(globalErrorHandler);
