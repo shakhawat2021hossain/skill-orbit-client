@@ -20,7 +20,7 @@ export interface ICourse {
 
     thumbnail?: string;
     tags?: string[];
-    syllabus?: ILesson[];
+    syllabus?: Types.ObjectId[];
     totalDuration?: number;
     resources?: string[];
     createdBy: Types.ObjectId;

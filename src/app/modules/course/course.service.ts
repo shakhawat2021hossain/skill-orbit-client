@@ -12,47 +12,35 @@ const createCourse = async (payload: ICourse, adminId: string) => {
 }
 
 const getAllCourses = async () => {
-   
-    const courses = await Course.find()
+
+    const courses = await Course.find().populate("syllabus")
     return courses
 
 }
 
 
+
+
+
 const createLesson = async (payload: ILesson, courseId: string) => {
-    
-    const lesson = await Lesson.create({...payload, courseId})
+
+    const lesson = await Lesson.create({ ...payload, courseId })
+    await Course.findByIdAndUpdate(
+        courseId,
+        { $push: { syllabus: lesson._id } },
+        { new: true }
+    );
+
     return lesson
 
 }
 
-// const addLesson = async (courseId: string, lessons: ILesson) => {
 
-
-//     const course = await Course.findByIdAndUpdate(
-//         courseId,
-//         { $push: { syllabus: { $each: lessons } } },
-//         { new: true }
-//     );
-
-//     // Optionally, recalc totalDuration
-//     if (course) {
-//         course.totalDuration = course?.syllabus?.reduce((sum, lesson) => sum + (lesson.duration || 0), 0) as number;
-//         await course.save();
-//     }
-
-//     return course
-
-
-
-
-// }
 
 
 
 
 export const courseServices = {
-    // addLesson,
     createLesson,
     getAllCourses,
     createCourse
