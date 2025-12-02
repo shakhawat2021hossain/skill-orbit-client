@@ -26,6 +26,31 @@ const register = async (payload: IUser) => {
 
 }
 
+const credentialLogin = async (payload: Partial<IUser>) => {
+    const isExist = await User.findOne({ email: payload.email as string })
+    console.log(isExist)
+    if (!isExist) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Invalid credentials")
+    }
+
+    const isMatched = await bcrypt.compare(payload.password as string, isExist.password)
+    if (!isMatched) {
+        throw new AppError(StatusCodes.BAD_REQUEST, "Invalid Credentials")
+    }
+
+
+    const user = isExist.toObject()
+
+    // delete user.password
+
+    return {
+        user
+    }
+
+}
+
+
 export const authServices = {
-    register
+    register,
+    credentialLogin
 }
