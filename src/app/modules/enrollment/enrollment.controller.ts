@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes"
 import { enrollmentServices } from "./enrollment.service.js"
 
 
+
 const enroll = catchAsync(async (req: Request, res: Response) => {
     // console.log(req.user)
 
@@ -18,9 +19,21 @@ const enroll = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const updateProgress = catchAsync(async (req: Request, res: Response) => {
+    // console.log(req.user)
+
+    const result = await enrollmentServices.updateProgress(req.params.courseId as string, req.user?.userId as string, req.params.lessonId as string)
+
+    sendResponse(res, {
+        data: result,
+        success: true,
+        message: "Updated progress successfully!",
+        statusCode: StatusCodes.OK
+    })
+})
 
 
 export const enrollmentControllers = {
-    
-    enroll
+    enroll,
+    updateProgress
 }

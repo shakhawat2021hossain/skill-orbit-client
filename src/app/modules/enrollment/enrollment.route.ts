@@ -7,5 +7,6 @@ import { Role } from "../auth/auth.interface.js"
 const router = Router()
 
 router.post('/:courseId/enroll', auth(Role.STUDENT), enrollmentControllers.enroll)
+router.patch('/:courseId/progress/:lessonId', auth(Role.STUDENT), enrollmentControllers.updateProgress)
 
 export const enrollmentRoutes = router
