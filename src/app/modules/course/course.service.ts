@@ -19,6 +19,16 @@ const getAllCourses = async () => {
 }
 
 
+const getCourseById = async (courseId: string) => {
+
+    const course = await Course.find({_id: courseId}).populate("syllabus")
+    return course
+
+}
+
+
+
+
 
 
 
@@ -43,5 +53,6 @@ const createLesson = async (payload: ILesson, courseId: string) => {
 export const courseServices = {
     createLesson,
     getAllCourses,
-    createCourse
+    createCourse,
+    getCourseById
 }
