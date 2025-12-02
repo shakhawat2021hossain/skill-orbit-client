@@ -11,6 +11,13 @@ const createCourse = async (payload: ICourse, adminId: string) => {
 
 }
 
+const getAllCourses = async () => {
+   
+    const courses = await Course.find()
+    return courses
+
+}
+
 
 const createLesson = async (payload: ILesson, courseId: string) => {
     
@@ -47,5 +54,6 @@ const createLesson = async (payload: ILesson, courseId: string) => {
 export const courseServices = {
     // addLesson,
     createLesson,
+    getAllCourses,
     createCourse
 }
