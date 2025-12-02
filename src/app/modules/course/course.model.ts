@@ -5,8 +5,16 @@ import { Category, type ICourse, type IEnrollment, type ILesson } from "./course
 const LessonSchema = new Schema<ILesson>({
     title: { type: String, required: true },
     videoUrl: { type: String },
-    duration: { type: Number, default: 0 }
-}, { _id: true });
+    duration: { type: Number, default: 0 },
+    courseId: { type: Schema.Types.ObjectId, ref: "Course", required: true }
+},
+    {
+        timestamps: true,
+        versionKey: false,
+
+    }
+);
+export const Lesson = model("Lesson", LessonSchema);
 
 
 // const ModuleSchema = new Schema<IModule>({
@@ -23,7 +31,7 @@ const CourseSchema = new Schema<ICourse>({
     instructor: { type: String, required: true },
     thumbnail: { type: String },
     tags: { type: [String], default: [] },
-    syllabus: { type: [LessonSchema], default: [] },
+    syllabus: [{ type: Schema.Types.ObjectId, ref: "Lesson" }],
     totalDuration: { type: Number, default: 0 },
     resources: { type: [String], default: [] },
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true }

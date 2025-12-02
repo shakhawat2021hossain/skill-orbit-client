@@ -35,6 +35,7 @@ export interface ILesson {
     title: string;
     videoUrl?: string;
     duration?: number; 
+    courseId: Types.ObjectId;
 }
 
 

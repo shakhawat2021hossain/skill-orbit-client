@@ -18,19 +18,30 @@ const createCourse = catchAsync(async (req: Request, res: Response) => {
 
 
 
-const addLesson = catchAsync(async (req: Request, res: Response) => {
-    const result = await courseServices.addLesson(req.body)
-
-
+const createLesson = catchAsync(async (req: Request, res: Response) => {
+    const result = await courseServices.createLesson(req.body, req.params.courseId as string)
 
     sendResponse(res, {
         data: result,
         success: true,
-        message: "Lesson added successfully!",
+        message: "Lesson created successfully!",
         statusCode: StatusCodes.CREATED
     })
 })
+
+
+// const addLesson = catchAsync(async (req: Request, res: Response) => {
+//     const result = await courseServices.addLesson(req.params.id as string, req.body)
+
+//     sendResponse(res, {
+//         data: result,
+//         success: true,
+//         message: "Lesson added successfully!",
+//         statusCode: StatusCodes.CREATED
+//     })
+// })
 export const courseControllers = {
-    addLesson,
-    createCourse
+    createCourse,
+    createLesson,
+    // addLesson,
 }
