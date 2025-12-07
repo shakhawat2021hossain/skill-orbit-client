@@ -14,7 +14,7 @@ const handleWebhookEvent = async (event: Stripe.Event) => {
             const studentId = session.metadata?.studentId;
 
             if (!courseId || !studentId) {
-                console.error("❌ Missing metadata in Stripe session");
+                console.error("❌ Missing metadata in Stripe session!");
                 return;
             }
 
