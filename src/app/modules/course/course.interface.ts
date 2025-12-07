@@ -11,26 +11,28 @@ export enum Category {
     CYBER_SECURITY = "Cyber Security",
     UI_UX = "UI/UX Design"
 }
+export type TResource = {
+    title: string;
+    link: string;
+}
 export interface ICourse {
     title: string;
     description: string;
     price: number;
     category: Category;
     instructor: string;
+    introVideo?: string;
+    resources?: TResource[]
 
     thumbnail?: string;
     tags?: string[];
     syllabus?: Types.ObjectId[];
     totalDuration?: number;
-    resources?: string[];
     createdBy: Types.ObjectId;
     students?: Types.ObjectId[]
 }
 
-// export interface IModule {
-//     title: string;
-//     lessons: ILesson[];
-// }
+
 
 export interface ILesson {
     title: string;

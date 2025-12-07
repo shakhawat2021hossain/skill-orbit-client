@@ -19,7 +19,7 @@ const register = async (payload: IUser) => {
         email,
         password: hashedPass,
         name,
-        rest
+        ...rest
     }
 
     const user = await User.create(userData)
