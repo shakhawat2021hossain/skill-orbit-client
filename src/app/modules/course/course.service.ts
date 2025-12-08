@@ -1,10 +1,10 @@
 import type { ICourse, ILesson } from "./course.interface.js"
 import { Course, Lesson } from "./course.model.js"
 
-const createCourse = async (payload: ICourse, adminId: string) => {
+const createCourse = async (payload: ICourse, instructorId: string) => {
     const courseData = {
         ...payload,
-        createdBy: adminId
+        createdBy: instructorId
     }
     const course = await Course.create(courseData)
     return course
@@ -16,6 +16,11 @@ const getAllCourses = async () => {
     const courses = await Course.find().populate("syllabus")
     return courses
 
+}
+
+const getInstructorCourses = async (instructorId: string) => {
+    const courses = await Course.find({ createdBy: instructorId }).populate("syllabus");
+    return courses;
 }
 
 
@@ -50,5 +55,6 @@ export const courseServices = {
     createLesson,
     getAllCourses,
     createCourse,
-    getCourseById
+    getCourseById,
+    getInstructorCourses
 }
