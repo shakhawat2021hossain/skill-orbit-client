@@ -86,7 +86,31 @@ const updateProgress = async (courseId: string, studentId: string, lessonId: str
 
 }
 
+
+const getEnrolledCourse = async (courseId: string, userId: string) => {
+
+    const course = await Course.findById(courseId).populate("syllabus");
+    if (!course) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Course not found!");
+    }
+
+    const enrollment = await Enrollment.findOne({ courseId, studentId: userId })
+        .populate({
+            path: "courseId",
+            model: Course,
+            populate: { path: "syllabus" },
+        })
+        .exec();
+
+    if (!enrollment) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Enrollment not found for this student and course");
+    }
+
+    return { enrollment, course };
+}
+
 export const enrollmentServices = {
     enroll,
-    updateProgress
+    updateProgress,
+    getEnrolledCourse
 }

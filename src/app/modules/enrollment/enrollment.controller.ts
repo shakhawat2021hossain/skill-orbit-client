@@ -33,7 +33,22 @@ const updateProgress = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+const getEnrolledCourse = catchAsync(async (req: Request, res: Response) => {
+    console.log("hitted")
+
+    const result = await enrollmentServices.getEnrolledCourse(req.params.courseId as string, req.user?.userId as string)
+
+    sendResponse(res, {
+        data: result,
+        success: true,
+        message: "Updated progress successfully!",
+        statusCode: StatusCodes.OK
+    })
+})
+
+
 export const enrollmentControllers = {
     enroll,
-    updateProgress
+    updateProgress,
+    getEnrolledCourse
 }
