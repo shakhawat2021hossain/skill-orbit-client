@@ -17,7 +17,7 @@ const createCourse = async (payload: ICourse, instructorId: string) => {
 
 const getAllCourses = async () => {
 
-    const courses = await Course.find().populate("syllabus")
+    const courses = await Course.find({ isPublished: true }).populate("syllabus")
     return courses
 
 }

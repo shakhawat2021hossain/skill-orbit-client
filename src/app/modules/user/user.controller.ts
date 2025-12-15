@@ -60,10 +60,25 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+
+const getInstructorDetails = catchAsync(async (req: Request, res: Response) => {
+	const result = await userServices.getInstructorDetails(req.params.userId as string);
+
+	sendResponse(res, {
+		data: result,
+		success: true,
+		message: "Retreived instructor details successfully!",
+		statusCode: StatusCodes.OK
+	});
+});
+
+
+
 export const userControllers = {
 	getAllUsers,
 	getUserById,
 	getMyProfile,
 	updateUser,
-	deleteUser
+	deleteUser,
+	getInstructorDetails
 };
