@@ -38,6 +38,7 @@ const CourseSchema = new Schema<ICourse>({
             link: { type: String, required: true }
         }
     ],
+    isDeleted: { type: Boolean, default: false },
     students: [{ type: Schema.Types.ObjectId, ref: "User" }],
     createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true }
 },

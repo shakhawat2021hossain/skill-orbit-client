@@ -19,7 +19,15 @@ const userSchema = new Schema<IUser>({
     isBlocked: { type: Boolean, default: false },
     isApproved: { type: Boolean, default: false },
 
-    
+
+
+
+    wishlist: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Course",
+        },
+    ],
     enrolledCourses: [
         {
             type: Schema.Types.ObjectId,

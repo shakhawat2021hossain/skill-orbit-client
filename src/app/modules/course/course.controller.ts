@@ -3,6 +3,7 @@ import catchAsync from "../../utils/catchAsync.js"
 import { sendResponse } from "../../utils/sendResponse.js"
 import { StatusCodes } from "http-status-codes"
 import { courseServices } from "./course.service.js"
+import type { JwtPayload } from "jsonwebtoken"
 
 const createCourse = catchAsync(async (req: Request, res: Response) => {
     // console.log(req.user)
@@ -31,12 +32,24 @@ const getAllCourses = catchAsync(async (req: Request, res: Response) => {
 })
 
 const getInstructorCourses = catchAsync(async (req: Request, res: Response) => {
-    const result = await courseServices.getInstructorCourses(req.user?.userId as string)
+    const result = await courseServices.getInstructorCourses(req.user as JwtPayload)
 
     sendResponse(res, {
         data: result,
         success: true,
         message: "Retrieved all courses of the instructor!",
+        statusCode: StatusCodes.OK
+    })
+})
+
+
+const getAdminCourses = catchAsync(async (req: Request, res: Response) => {
+    const result = await courseServices.getAdminCourses()
+
+    sendResponse(res, {
+        data: result,
+        success: true,
+        message: "Retrieved all courses for admin!",
         statusCode: StatusCodes.OK
     })
 })
@@ -68,6 +81,19 @@ const getCourseById = catchAsync(async (req: Request, res: Response) => {
 })
 
 
+const adminToggleDeleteCourse = catchAsync(async (req: Request, res: Response) => {
+    const courseId = req.params.courseId as string;
+    const result = await courseServices.adminToggleDeleteCourse(courseId);
+
+    sendResponse(res, {
+        data: { isDeleted: result.course.isDeleted },
+        success: true,
+        message: result.message,
+        statusCode: StatusCodes.OK
+    })
+})
+
+
 const updateCourse = catchAsync(async (req: Request, res: Response) => {
     const courseId = req.params.courseId as string
     const instructorId = req.user?.userId as string
@@ -87,7 +113,9 @@ export const courseControllers = {
     createCourse,
     getAllCourses,
     getInstructorCourses,
-    getCourseById,
+    getAdminCourses,
     getMyCourses,
-    updateCourse
+    getCourseById,
+    updateCourse,
+    adminToggleDeleteCourse
 }

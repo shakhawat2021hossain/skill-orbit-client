@@ -10,7 +10,6 @@ interface IResData<T> {
         total: number
     };
     data: T | null | undefined;
-
 }
 
 export const sendResponse = <T>(res: Response, resData: IResData<T>) => {

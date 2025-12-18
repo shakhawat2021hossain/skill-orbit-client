@@ -30,7 +30,8 @@ export interface ICourse {
     syllabus?: Types.ObjectId[];
     totalDuration?: number;
     createdBy: Types.ObjectId;
-    students?: Types.ObjectId[]
+    students?: Types.ObjectId[];
+    isDeleted?: boolean;
 }
 
 

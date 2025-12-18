@@ -21,6 +21,7 @@ export interface IUser {
 
     // Student fields
     enrolledCourses?: Types.ObjectId[];
+    wishlist?: Types.ObjectId[];
 
     // Instructor fields
     publishedCourses?: Types.ObjectId[];
