@@ -37,11 +37,11 @@ const credentialLogin = catchAsync(async (req: Request, res: Response) => {
 const logout = catchAsync(async (req: Request, res: Response) => {
 
     // Clear the access token cookie
-    res.clearCookie("accessToken", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-    })
+    // res.clearCookie("accessToken", {
+    //     httpOnly: true,
+    //     secure: true,
+    //     sameSite: "none",
+    // })
 
     sendResponse(res, {
         data: null,
