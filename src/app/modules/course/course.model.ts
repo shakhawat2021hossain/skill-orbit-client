@@ -40,7 +40,11 @@ const CourseSchema = new Schema<ICourse>({
     ],
     isDeleted: { type: Boolean, default: false },
     students: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true }
+    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    rating: {
+        count: { type: Number },
+        average: { type: Number }
+    }
 },
     {
         timestamps: true,

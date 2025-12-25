@@ -32,6 +32,13 @@ export interface ICourse {
     createdBy: Types.ObjectId;
     students?: Types.ObjectId[];
     isDeleted?: boolean;
+
+    rating?: {
+        average: number;
+        count: number;
+    };
+
+
 }
 
 

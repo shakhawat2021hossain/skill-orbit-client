@@ -86,55 +86,7 @@ const deleteUser = async (userId: string) => {
 }
 
 
-const addToWishlist = async (userId: string, courseId: string) => {
-  const course = await Course.findById(courseId);
-  if (!course) {
-    throw new AppError(StatusCodes.NOT_FOUND, "Course not found");
-  }
-  
-  
 
-  const updatedUser = await User.findByIdAndUpdate(
-    userId,
-    {
-      $addToSet: {
-        wishlist: new Types.ObjectId(courseId),
-      },
-    },
-    { new: true }
-  ).select("-password");
-  console.log("up", updatedUser)
-
-  if (!updatedUser) {
-    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
-  }
-
-
-  return updatedUser.wishlist;
-}
-
-const removeFromWishlist = async (userId: string, courseId: string) => {
-  const updated = await User.findByIdAndUpdate(
-    userId,
-    { $pull: { wishlist: courseId } },
-    { new: true }
-  ).select('-password');
-
-  if (!updated) {
-    throw new AppError(StatusCodes.NOT_FOUND, 'User not found');
-  }
-
-  return updated.wishlist;
-}
-
-const getWishlist = async (userId: string) => {
-  const user = await User.findById(userId).populate({ path: 'wishlist', populate: { path: 'syllabus' } }).select('-password');
-  if (!user) {
-    throw new AppError(StatusCodes.NOT_FOUND, 'User not found');
-  }
-
-  return user.wishlist;
-}
 
 
 export const getInstructorDetails = async (
@@ -260,8 +212,5 @@ export const userServices = {
   updateUser,
   deleteUser,
   getInstructorDetails,
-  updateMyProfile,
-  addToWishlist,
-  removeFromWishlist,
-  getWishlist
+  updateMyProfile
 }

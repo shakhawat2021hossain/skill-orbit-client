@@ -88,43 +88,6 @@ const getInstructorDetails = catchAsync(async (req: Request, res: Response) => {
 
 });
 
-const addToWishlist = catchAsync(async (req: Request, res: Response) => {
-	const userId = req.user?.userId as string;
-	const courseId = req.params.courseId as string;
-	const result = await userServices.addToWishlist(userId, courseId);
-
-	sendResponse(res, {
-		data: result,
-		success: true,
-		message: "Added to wishlist successfully!",
-		statusCode: StatusCodes.OK
-	});
-});
-
-const removeFromWishlist = catchAsync(async (req: Request, res: Response) => {
-	const userId = req.user?.userId as string;
-	const courseId = req.params.courseId as string;
-	const result = await userServices.removeFromWishlist(userId, courseId);
-
-	sendResponse(res, {
-		data: result,
-		success: true,
-		message: "Removed from wishlist successfully!",
-		statusCode: StatusCodes.OK
-	});
-});
-
-const getWishlist = catchAsync(async (req: Request, res: Response) => {
-	const userId = req.user?.userId as string;
-	const result = await userServices.getWishlist(userId);
-
-	sendResponse(res, {
-		data: result,
-		success: true,
-		message: "Retrieved wishlist successfully!",
-		statusCode: StatusCodes.OK
-	});
-});
 
 
 export const userControllers = {
@@ -134,8 +97,5 @@ export const userControllers = {
 	updateMyProfile,
 	updateUser,
 	deleteUser,
-	getInstructorDetails,
-	addToWishlist,
-	getWishlist,
-	removeFromWishlist
+	getInstructorDetails
 };
