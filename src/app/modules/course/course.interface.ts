@@ -33,7 +33,7 @@ export interface ICourse {
     students?: Types.ObjectId[];
     isDeleted?: boolean;
 
-    rating?: {
+    rating: {
         average: number;
         count: number;
     };

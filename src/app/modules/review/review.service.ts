@@ -60,7 +60,24 @@ const postReview = async (payload: IReview, userId: string) => {
     }
 }
 
+const getReviews = async (courseId: string) => {
+    // validate course exists
+    const course = await Course.findById(courseId);
+    if (!course) {
+        throw new AppError(StatusCodes.NOT_FOUND, "Course not found");
+    }
+
+    // fetch reviews for the course, newest first, include reviewer basic info
+    const reviews = await Review.find({ courseId })
+        .sort({ createdAt: -1 })
+        .populate({ path: "studentId", select: "name picture" })
+        .exec();
+
+    return reviews;
+}
+
 
 export const reviewServices = {
-    postReview
+    postReview,
+    getReviews
 }

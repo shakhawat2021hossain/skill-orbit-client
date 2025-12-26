@@ -18,11 +18,33 @@ const createCourse = async (payload: ICourse, instructorId: string) => {
 }
 
 const getAllCourses = async () => {
+    
+    const courses = await Course.find({ isPublished: true, isDeleted: false }).populate("syllabus").select('-resources')
 
-    const courses = await Course.find({ isPublished: true, isDeleted: false }).populate("syllabus")
     return courses
 
 }
+
+const getCourseById = async (courseId: string) => {
+
+    const course = await Course.find({ _id: courseId }).populate("syllabus")
+    return course
+
+}
+const getPublicCourseDetails= async (courseId: string) => {
+  const course = await Course.findById(courseId)
+    .select(
+      "title description thumbnail price category totalDuration isPublished rating instructor introVideo tags isDeleted syllabus"
+    )
+    .populate({
+      path: "syllabus",
+      select: "title duration",
+    })
+    .lean();
+
+  return course;
+};
+
 
 const getInstructorCourses = async (decodedToken: JwtPayload) => {
     // console.log(decodedToken)
@@ -64,12 +86,6 @@ const getMyCourses = async (userId: string) => {
 }
 
 
-const getCourseById = async (courseId: string) => {
-
-    const course = await Course.find({ _id: courseId }).populate("syllabus")
-    return course
-
-}
 
 
 const updateCourse = async (courseId: string, instructorId: string, payload: Partial<ICourse>) => {
@@ -115,11 +131,12 @@ const adminToggleDeleteCourse = async (courseId: string) => {
 // append to exported services
 export const courseServices = {
     getAllCourses,
+    getPublicCourseDetails,
     getInstructorCourses,
     getAdminCourses,
     createCourse,
     getCourseById,
     getMyCourses,
     updateCourse,
-    adminToggleDeleteCourse
+    adminToggleDeleteCourse,
 }

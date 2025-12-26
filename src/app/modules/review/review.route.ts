@@ -5,6 +5,7 @@ import { reviewControllers } from "./review.controller.js";
 
 const router = Router();
 
-router.post('/add', auth(Role.STUDENT), reviewControllers.postReview)
+router.post('/add', auth(Role.STUDENT), reviewControllers.postReview);
+router.get('/:courseId', reviewControllers.getReviews);
 
 export const reviewRoutes = router;

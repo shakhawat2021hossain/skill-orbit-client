@@ -31,6 +31,28 @@ const getAllCourses = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const getPublicCourseDetails = catchAsync(async (req: Request, res: Response) => {
+    const result = await courseServices.getPublicCourseDetails(req.params?.courseId as string)
+
+    sendResponse(res, {
+        data: result,
+        success: true,
+        message: "Retrieved all courses successfully!",
+        statusCode: StatusCodes.OK
+    })
+})
+const getCourseById = catchAsync(async (req: Request, res: Response) => {
+
+    const result = await courseServices.getCourseById(req.params?.courseId as string)
+
+    sendResponse(res, {
+        data: result,
+        success: true,
+        message: "Retrieved course successfully!",
+        statusCode: StatusCodes.OK
+    })
+})
+
 const getInstructorCourses = catchAsync(async (req: Request, res: Response) => {
     const result = await courseServices.getInstructorCourses(req.user as JwtPayload)
 
@@ -68,17 +90,6 @@ const getMyCourses = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
-const getCourseById = catchAsync(async (req: Request, res: Response) => {
-
-    const result = await courseServices.getCourseById(req.params?.courseId as string)
-
-    sendResponse(res, {
-        data: result,
-        success: true,
-        message: "Retrieved course successfully!",
-        statusCode: StatusCodes.OK
-    })
-})
 
 
 const adminToggleDeleteCourse = catchAsync(async (req: Request, res: Response) => {
@@ -112,10 +123,11 @@ const updateCourse = catchAsync(async (req: Request, res: Response) => {
 export const courseControllers = {
     createCourse,
     getAllCourses,
+    getCourseById,
+    getPublicCourseDetails,
     getInstructorCourses,
     getAdminCourses,
     getMyCourses,
-    getCourseById,
     updateCourse,
     adminToggleDeleteCourse
 }
